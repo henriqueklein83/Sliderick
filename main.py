@@ -12,21 +12,19 @@ API_URL = "https://blaze.com/api/singleplayer-originals/originals/slide/recent"
 app = Flask('')
 @app.route('/')
 def home():
-    return "Robô Rick Mentoria 2.0 está ONLINE!"
+    return "Robô Rick Mentoria 2.0 Online"
 
 def run_web():
-    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 10000)))
 
-def enviar_telegram(mensagem):
+def enviar_telegram(msg):
     try:
         url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
-        payload = {"chat_id": CHAT_ID, "text": mensagem, "parse_mode": "Markdown"}
-        requests.post(url, json=payload, timeout=10)
+        requests.post(url, json={"chat_id": CHAT_ID, "text": msg}, timeout=10)
     except: pass
 
 def robo_principal():
-    print("🤖 Robô Rick - Rodando")
-    enviar_telegram("🚀 **Robô no Render!**\nMonitorando o Slide 24h...")
+    enviar_telegram("✅ CONEXÃO ESTABELECIDA!\nO robô da Mentoria 2.0 está no ar.")
     ultima_rodada_id = ""
     while True:
         try:
@@ -42,6 +40,5 @@ def robo_principal():
         time.sleep(15)
 
 if __name__ == "__main__":
-    t = Thread(target=run_web)
-    t.start()
+    Thread(target=run_web).start()
     robo_principal()
