@@ -4,42 +4,35 @@ import os
 from flask import Flask
 from threading import Thread
 
-# Dados do Rick - Mentoria 2.0
+# Token que você confirmou
 TOKEN = "8330303692:AAFZj_VxjY0YGip1tTenySayLMVda-lu27k"
-CHAT_ID = "-1003824589908"
-API_URL = "https://blaze.com/api/singleplayer-originals/originals/slide/recent"
 
 app = Flask('')
 @app.route('/')
-def home():
-    return "Robo Rick Online"
+def home(): return "ROBO RICK AGUARDANDO ID"
 
 def run_web():
-    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 10000)))
+    app.run(host='0.0.0.0', port=10000)
 
-def enviar_telegram(msg):
-    try:
-        url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
-        requests.post(url, json={"chat_id": CHAT_ID, "text": msg}, timeout=10)
-    except: pass
-
-def robo_principal():
-    # Isso confirma se o bot consegue falar no grupo
-    enviar_telegram("🚀 **Robo Rick Mentoria 2.0:** Conexão Estabelecida no Render!")
-    ultima_rodada_id = ""
+def buscar_id_e_enviar():
+    print("🤖 Robô Rick - Modo busca de ID iniciado...")
     while True:
         try:
-            headers = {'User-Agent': 'Mozilla/5.0'}
-            response = requests.get(API_URL, headers=headers, timeout=15).json()
-            id_atual = response[0]['id']
-            if id_atual != ultima_rodada_id:
-                ultima_rodada_id = id_atual
-                v1, v2, v3 = float(response[1]['slide_point']), float(response[2]['slide_point']), float(response[3]['slide_point'])
-                if v1 < 1.50 and v2 < 1.50 and v3 < 1.50:
-                    enviar_telegram("🚨 **SINAL CONFIRMADO** 🚨\n\n🎯 Alvo: 2.00x\n🛡️ Gale: 1")
+            # Verifica se alguém falou com o bot ou se ele foi adicionado a um grupo
+            url = f"https://api.telegram.org/bot{TOKEN}/getUpdates"
+            res = requests.get(url).json()
+            if res["result"]:
+                # Pega o ID da última conversa que o bot teve
+                ultimo_chat_id = res["result"][-1]["message"]["chat"]["id"]
+                print(f"✅ ID ENCONTRADO: {ultimo_chat_id}")
+                
+                # Tenta enviar a mensagem para esse ID encontrado
+                msg_url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
+                requests.post(msg_url, json={"chat_id": ultimo_chat_id, "text": f"🚀 RICK! O ID REAL É: {ultimo_chat_id}"})
+                break
         except: pass
-        time.sleep(15)
+        time.sleep(5)
 
 if __name__ == "__main__":
     Thread(target=run_web).start()
-    robo_principal()
+    buscar_id_e_enviar()
