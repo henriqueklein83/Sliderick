@@ -12,8 +12,7 @@ API_URL = "https://blaze.com/api/singleplayer-originals/originals/slide/recent"
 app = Flask('')
 @app.route('/')
 def home():
-    return "Robô Rick Mentoria 2.0 Online"
-
+    return "Tô, Vivo" 
 def run_web():
     app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 10000)))
 
