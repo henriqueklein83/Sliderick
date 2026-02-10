@@ -4,7 +4,7 @@ import os
 from flask import Flask
 from threading import Thread
 
-# Dados do Rick
+# Dados do Rick - Mentoria 2.0
 TOKEN = "8330303692:AAFZj_VxjY0YGip1tTenySayLMVda-lu27k"
 CHAT_ID = "-1003824589908"
 API_URL = "https://blaze.com/api/singleplayer-originals/originals/slide/recent"
@@ -12,7 +12,8 @@ API_URL = "https://blaze.com/api/singleplayer-originals/originals/slide/recent"
 app = Flask('')
 @app.route('/')
 def home():
-    return "Tô, Vivo" 
+    return "Robo Rick Online"
+
 def run_web():
     app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 10000)))
 
@@ -23,7 +24,8 @@ def enviar_telegram(msg):
     except: pass
 
 def robo_principal():
-    enviar_telegram("✅ CONEXÃO ESTABELECIDA!\nO robô da Mentoria 2.0 está no ar.")
+    # Isso confirma se o bot consegue falar no grupo
+    enviar_telegram("🚀 **Robo Rick Mentoria 2.0:** Conexão Estabelecida no Render!")
     ultima_rodada_id = ""
     while True:
         try:
