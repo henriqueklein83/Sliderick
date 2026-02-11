@@ -6,7 +6,7 @@ from threading import Thread
 
 # CONFIGURAÇÕES DO RICK
 TOKEN = "8330303692:AAFZj_VxjY0YGip1tTenySayLMVda-lu27k"
-CHAT_ID = "-1003824589908" # SE NÃO FUNCIONAR, TESTE COM: -4660784
+CHAT_ID = -1003824589908 # SE NÃO FUNCIONAR, TESTE COM: -4660784
 API_URL = "https://blaze.com/api/singleplayer-originals/originals/slide/recent"
 
 app = Flask('')
