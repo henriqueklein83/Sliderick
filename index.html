@@ -1,55 +1,49 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Slide Miner PROXY</title>
-<style>
-body{background:#0b1020;color:#fff;font-family:Arial;padding:15px}
-.box{background:#18223d;padding:12px;margin:5px;border-radius:10px}
-.green{color:#34d399}
-.red{color:#f87171}
-</style>
+  <title>Slide AO VIVO 🔥</title>
+  <style>
+    body {
+      background: #0b0f1a;
+      color: white;
+      font-family: Arial;
+      text-align: center;
+    }
+    .box {
+      display: inline-block;
+      margin: 10px;
+      padding: 20px;
+      border-radius: 10px;
+      background: #1c2333;
+      font-size: 22px;
+    }
+  </style>
 </head>
 <body>
 
-<h2>🔥 Slide Miner (Proxy)</h2>
-<div id="status">Conectando...</div>
+<h1>🔥 Slide AO VIVO</h1>
+
 <div id="results"></div>
 
 <script>
-const proxy = "https://api.allorigins.win/raw?url=";
-const url = "https://blaze.bet.br/api/singleplayer-originals/originals/slide_games/recent/history/1";
-
-async function fetchData(){
-  try{
-    const res = await fetch(proxy + encodeURIComponent(url));
+async function load() {
+  try {
+    const res = await fetch("https://blaze.bet.br/api/singleplayer-originals/originals/slide_games/recent/history/1");
     const data = await res.json();
 
-    document.getElementById("status").innerText = "🟢 AO VIVO";
-
-    const container = document.getElementById("results");
-    container.innerHTML = "";
-
-    data.slice(0,20).forEach(r=>{
-      const d = new Date(r.created_at);
-      const cor = r.crash_point >= 10 ? "green" : "red";
-
-      container.innerHTML += `
-        <div class="box">
-          <div class="${cor}">${Number(r.crash_point).toFixed(2)}x</div>
-          <div>${d.toLocaleTimeString('pt-BR')}</div>
-        </div>
-      `;
+    let html = "";
+    data.records.slice(0, 10).forEach(r => {
+      html += `<div class="box">${r.multiplier}x</div>`;
     });
 
-  }catch(e){
-    document.getElementById("status").innerText = "Erro ainda...";
+    document.getElementById("results").innerHTML = html;
+  } catch {
+    document.getElementById("results").innerHTML = "Erro ao carregar";
   }
 }
 
-setInterval(fetchData,3000);
-fetchData();
+setInterval(load, 3000);
+load();
 </script>
 
 </body>
