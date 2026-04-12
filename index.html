@@ -28,7 +28,7 @@
 <script>
 async function load() {
   try {
-    const res = await fetch("https://blaze.bet.br/api/singleplayer-originals/originals/slide_games/recent/history/1");
+    const res = await fetch("https://api.allorigins.win/raw?url=https://blaze.bet.br/api/singleplayer-originals/originals/slide_games/recent/history/1")
     const data = await res.json();
 
     let html = "";
