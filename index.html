@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-  <title>Slide AO VIVO 🔥</title>
+  <meta charset="UTF-8">
+  <title>🔥 Slide AO VIVO</title>
+
   <style>
     body {
       background: #0b0f1a;
@@ -9,41 +11,51 @@
       font-family: Arial;
       text-align: center;
     }
+
     .box {
       display: inline-block;
       margin: 10px;
       padding: 20px;
       border-radius: 10px;
       background: #1c2333;
-      font-size: 22px;
+      font-size: 20px;
     }
+
+    .green { color: #34d399; }
+    .red { color: #f87171; }
   </style>
 </head>
+
 <body>
 
-<h1>🔥 Slide AO VIVO</h1>
-
-<div id="results"></div>
+<h2>🔥 Slide AO VIVO</h2>
+<div id="status">Carregando...</div>
+<div id="resultados"></div>
 
 <script>
-async function load() {
+async function carregar() {
   try {
-    const res = await fetch("https://api.allorigins.win/raw?url=https://blaze.bet.br/api/singleplayer-originals/originals/slide_games/recent/history/1")
+    const res = await fetch("https://corsproxy.io/?https://blaze.bet.br/api/singleplayer-originals/originals/slide_games/recent/history/1");
     const data = await res.json();
 
+    document.getElementById("status").innerText = "Conectado";
+
     let html = "";
-    data.records.slice(0, 10).forEach(r => {
-      html += `<div class="box">${r.multiplier}x</div>`;
+
+    data.slice(0, 10).forEach(item => {
+      let cor = item.crash_point >= 2 ? "green" : "red";
+      html += `<div class="box ${cor}">${item.crash_point}x</div>`;
     });
 
-    document.getElementById("results").innerHTML = html;
-  } catch {
-    document.getElementById("results").innerHTML = "Erro ao carregar";
+    document.getElementById("resultados").innerHTML = html;
+
+  } catch (e) {
+    document.getElementById("status").innerText = "Erro ao carregar";
   }
 }
 
-setInterval(load, 3000);
-load();
+setInterval(carregar, 3000);
+carregar();
 </script>
 
 </body>
