@@ -1,64 +1,33 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>🔥 Slide AO VIVO</title>
-
-  <style>
-    body {
-      background: #0b0f1a;
-      color: white;
-      font-family: Arial;
-      text-align: center;
-    }
-
-    .box {
-      display: inline-block;
-      margin: 10px;
-      padding: 20px;
-      border-radius: 10px;
-      background: #1c2333;
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .green { color: #34d399; }
-    .red { color: #f87171; }
-  </style>
+  <title>Slide AO VIVO 🔥</title>
 </head>
-
-<body>
+<body style="background:#0b0f1a;color:white;text-align:center;font-family:Arial;">
 
 <h2>🔥 Slide AO VIVO</h2>
 <div id="status">Carregando...</div>
-<div id="resultados"></div>
+<div id="result"></div>
 
 <script>
-async function carregar() {
+async function getSlide() {
   try {
-    const res = await fetch("/api/slide");
+    const res = await fetch("https://blaze.bet.br/api/singleplayer-originals/originals/slide_games/recent/history/1");
     const data = await res.json();
 
-    document.getElementById("status").innerText = "Conectado";
+    const crash = data[0].crash_point;
 
-    let html = "";
-
-    data.slice(0, 10).forEach(item => {
-      let valor = item.crash_point;
-      let cor = valor >= 2 ? "green" : "red";
-
-      html += `<div class="box ${cor}">${valor}x</div>`;
-    });
-
-    document.getElementById("resultados").innerHTML = html;
+    document.getElementById("status").innerText = "AO VIVO";
+    document.getElementById("result").innerHTML =
+      "<h1>" + crash + "x</h1>";
 
   } catch (e) {
     document.getElementById("status").innerText = "Erro ao carregar";
   }
 }
 
-setInterval(carregar, 3000);
-carregar();
+setInterval(getSlide, 2000);
+getSlide();
 </script>
 
 </body>
