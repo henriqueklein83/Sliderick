@@ -19,6 +19,7 @@
       border-radius: 10px;
       background: #1c2333;
       font-size: 20px;
+      font-weight: bold;
     }
 
     .green { color: #34d399; }
@@ -35,7 +36,7 @@
 <script>
 async function carregar() {
   try {
-    const res = await fetch("https://corsproxy.io/?https://blaze.bet.br/api/singleplayer-originals/originals/slide_games/recent/history/1");
+    const res = await fetch("/api/slide");
     const data = await res.json();
 
     document.getElementById("status").innerText = "Conectado";
@@ -43,8 +44,10 @@ async function carregar() {
     let html = "";
 
     data.slice(0, 10).forEach(item => {
-      let cor = item.crash_point >= 2 ? "green" : "red";
-      html += `<div class="box ${cor}">${item.crash_point}x</div>`;
+      let valor = item.crash_point;
+      let cor = valor >= 2 ? "green" : "red";
+
+      html += `<div class="box ${cor}">${valor}x</div>`;
     });
 
     document.getElementById("resultados").innerHTML = html;
